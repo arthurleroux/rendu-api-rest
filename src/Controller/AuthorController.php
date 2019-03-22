@@ -112,25 +112,25 @@ class AuthorController extends AbstractController
     public function updateAuthorAction(Request $request, ObjectManager $manager, $id, ValidatorInterface $validator)
     {
         $authorRepository  = $manager->getRepository(Author::class);
-        $existingauthor    = $authorRepository->find($id);
+        $existingAuthor    = $authorRepository->find($id);
 
-        if(!$existingauthor instanceof Author) {
+        if(!$existingAuthor instanceof Author) {
             return $this->json([
                 "success" => false,
                 "error" => 'Author not found'
             ], Response::HTTP_NOT_FOUND);
         }
 
-        $form = $this->createForm(AuthorType::class, $existingauthor);
+        $form = $this->createForm(AuthorType::class, $existingAuthor);
         $form->submit($request->request->all());
 
-        $errors = $validator->validate($existingauthor);
+        $errors = $validator->validate($existingAuthor);
 
         if(!count($errors)) {
-            $manager->persist($existingauthor);
+            $manager->persist($existingAuthor);
             $manager->flush();
 
-            return $this->json($existingauthor, Response::HTTP_CREATED);
+            return $this->json($existingAuthor, Response::HTTP_CREATED);
         }
         else {
             return $this->json([
