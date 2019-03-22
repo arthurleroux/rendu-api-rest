@@ -101,7 +101,6 @@ class ArticleController extends AbstractController
         }
     }
 
-
     /**
      * @FOSRest\Put("/api/articles/{id}")
      * @param Request $request
