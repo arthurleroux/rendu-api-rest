@@ -1,0 +1,7 @@
+easy_admin:
+    entities:
+        - App\Entity\Article
+        - App\Entity\Author
+        - App\Entity\Comment
+        - App\Entity\Category
+        - App\Entity\User
