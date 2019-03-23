@@ -19,49 +19,25 @@ class Comment
 
     /**
      * @Assert\NotBlank
-     * @ORM\Column(type="integer")
-     */
-    private $author_id;
-
-    /**
-     * @Assert\NotBlank
-     * @ORM\Column(type="integer")
-     */
-    private $article_id;
-
-    /**
-     * @Assert\NotBlank
      * @ORM\Column(type="text")
      */
     private $text;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $article;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getAuthorId(): ?int
-    {
-        return $this->author_id;
-    }
-
-    public function setAuthorId(int $author_id): self
-    {
-        $this->author_id = $author_id;
-
-        return $this;
-    }
-
-    public function getArticleId(): ?int
-    {
-        return $this->article_id;
-    }
-
-    public function setArticleId(int $article_id): self
-    {
-        $this->article_id = $article_id;
-
-        return $this;
     }
 
     public function getText(): ?string
@@ -72,6 +48,30 @@ class Comment
     public function setText(string $text): self
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?Author $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function getArticle(): ?Article
+    {
+        return $this->article;
+    }
+
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
 
         return $this;
     }
