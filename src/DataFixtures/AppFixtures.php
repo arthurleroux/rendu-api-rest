@@ -22,36 +22,42 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        for($i=0; $i<10; $i++) {
+        $authors = [];
+        for($i=1; $i<=10; $i++) {
             $author = new Author();
             $author->setFirstName('Michel-' . $i);
             $author->setName('Dominique-' . $i);
 
+            $authors[$i] = $author;
             $manager->persist($author);
         }
 
-        for($i=0; $i<10; $i++) {
+        $categories = [];
+        for($i=1; $i<=10; $i++) {
             $category = new Category();
             $category->setName('Category-' . $i);
 
+            $categories[$i] = $category;
             $manager->persist($category);
         }
 
-        for($i=0; $i<50; $i++) {
+        $articles = [];
+        for($i=1; $i<=50; $i++) {
             $article = new Article();
             $article->setTitle('Article-' . $i);
             $article->setText('Text-' . $i);
-            $article->setCategoryId(rand(1, 10));
-            $article->setAuthorId(rand(1, 10));
+            $article->setCategory($categories[rand(1, sizeof($categories))]);
+            $article->setAuthor($authors[rand(1, sizeof($authors))]);
 
+            $articles[$i] = $article;
             $manager->persist($article);
         }
 
-        for($i=0; $i<200; $i++) {
+        for($i=1; $i<=200; $i++) {
             $comment = new Comment();
             $comment->setText('Comment-' . $i);
-            $comment->setArticleId(rand(1, 50));
-            $comment->setAuthorId(rand(1, 10));
+            $comment->setArticle($articles[rand(1, sizeof($articles))]);
+            $comment->setAuthor($authors[rand(1, sizeof($authors))]);
 
             $manager->persist($comment);
         }
